@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/menu")
@@ -33,4 +35,11 @@ public class MenuController {
                 .ok(menuService.findAllByStoreId(storeId, PageRequest.of(page, size)));
     }
 
+    @GetMapping("/store/{id}/menus")
+    public ResponseEntity<List<MenuResponse>> findAllByStoreId(
+            @PathVariable("id") Long storeId,
+            @RequestParam("menuIds") String menus
+    ) {
+        return ResponseEntity.ok(menuService.findAllByStoreId(storeId, menus));
+    }
 }

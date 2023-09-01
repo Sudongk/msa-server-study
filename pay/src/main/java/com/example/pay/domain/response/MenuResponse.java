@@ -1,6 +1,6 @@
-package com.example.menu.domain.response;
+package com.example.pay.domain.response;
 
-import com.example.menu.domain.entity.Menu;
+import com.example.pay.domain.dto.Menu;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

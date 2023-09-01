@@ -5,10 +5,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name = "CEO-SERVICE")
-public interface OwnerClient {
+@FeignClient(name = "CUSTOMER-SERVICE")
+public interface CustomerClient {
 
-    @PostMapping("/api/v1/owner")
-    ResponseEntity<Void> saveOwner(UserRequest userRequest);
+    @PostMapping("/api/v1/customer")
+    ResponseEntity<Void> saveCustomer(UserRequest userRequest);
 
 }
