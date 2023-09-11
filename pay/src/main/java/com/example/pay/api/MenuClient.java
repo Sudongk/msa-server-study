@@ -13,6 +13,9 @@ import java.util.List;
 public interface MenuClient {
 
     @GetMapping("/api/v1/menu/store/{id}/menus")
-    ResponseEntity<List<MenuResponse>> findAllByStoreIdAndInMenuIds(@PathVariable("id") Long storeId, @RequestParam("menuIds") String menus);
+    ResponseEntity<List<MenuResponse>> findAllByStoreIdAndInMenuIds(
+            @PathVariable("id") Long storeId,
+            @RequestParam("menuIds") String menus
+    );
 
 }

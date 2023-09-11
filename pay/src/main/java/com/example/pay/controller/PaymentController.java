@@ -30,13 +30,6 @@ public class PaymentController {
         paymentService.save(request, tokenInfo);
     }
 
-    @GetMapping
-    public ResponseEntity<PaymentResponses> getAllPayment() {
-        PaymentResponses response = paymentService.getAllPayment();
-
-        return ResponseEntity.ok(response);
-    }
-
     @GetMapping("/me")
     public ResponseEntity<PaymentResponses> getMyPayment(@RequestHeader("Authorization") String token) {
         TokenInfo tokenInfo = jwtService.parseToken(token.replace("Bearer ", ""));
