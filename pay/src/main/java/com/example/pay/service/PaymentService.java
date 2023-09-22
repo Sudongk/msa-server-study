@@ -6,14 +6,15 @@ import com.example.pay.api.OrderCommandClient;
 import com.example.pay.config.TokenInfo;
 import com.example.pay.domain.dto.Customer;
 import com.example.pay.domain.entity.Payment;
+import com.example.pay.domain.kafka.OrderKafkaData;
 import com.example.pay.domain.request.OrderRequest;
 import com.example.pay.domain.request.PaymentRequest;
 import com.example.pay.domain.response.MenuResponse;
 import com.example.pay.domain.response.PaymentResponse;
 import com.example.pay.domain.response.PaymentResponses;
+import com.example.pay.kafka.OrderCommandProducer;
 import com.example.pay.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class PaymentService {
     private final CustomerClient customerClient;
     private final MenuClient menuClient;
     private final OrderCommandClient orderCommandClient;
+    private final OrderCommandProducer orderCommandProducer;
 
     // 결제 등록
     @Transactional
@@ -43,11 +45,14 @@ public class PaymentService {
                 .mapToInt(Integer::intValue) // Integer를 int로 변환
                 .sum();
 
-        orderCommandClient(request, tokenInfo, totalPrice);
+        // FeignClient를 사용하여 외부 서버와의 통신
+//        orderCommandClient(request, tokenInfo, totalPrice);
+
+        // FeignClient 대신 Kafka를 사용하여 외부 서버와의 통신
+        orderCommandProducer.send(new OrderKafkaData(request.getStoreId(), tokenInfo.getId().toString(), totalPrice));
     }
 
     // 내 결제내역 조회
-
     public PaymentResponses getMyPayment(TokenInfo tokenInfo) {
         List<PaymentResponse> paymentResponses = new ArrayList<>();
 

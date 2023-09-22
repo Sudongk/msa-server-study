@@ -21,6 +21,17 @@ spring:
     console:
       enabled: true
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeSerializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeSerializer
+      group-id: order-command-group
+      auto-offset-reset: earliest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
 eureka:
   client:
     service-url:

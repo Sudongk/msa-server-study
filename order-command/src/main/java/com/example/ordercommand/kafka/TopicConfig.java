@@ -1,0 +1,23 @@
+package com.example.ordercommand.kafka;
+
+import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.config.TopicBuilder;
+
+@Configuration
+public class TopicConfig {
+
+    public static final String ORDER_COMMAND = "ORDER-COMMAND";
+    public static final String ORDER_QUERY = "ORDER-QUERY";
+
+    @Bean
+    public NewTopic orderQuery() {
+        return TopicBuilder
+                .name(ORDER_QUERY)
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+}

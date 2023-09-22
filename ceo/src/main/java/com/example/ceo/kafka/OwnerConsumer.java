@@ -16,4 +16,5 @@ public class OwnerConsumer {
     public void listen(OwnerRequest request) {
         ownerService.save(request);
     }
+
 }
