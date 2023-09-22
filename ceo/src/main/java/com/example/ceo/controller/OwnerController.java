@@ -1,4 +1,4 @@
-package com.example.ceo.domain.controller;
+package com.example.ceo.controller;
 
 import com.example.ceo.domain.request.OwnerRequest;
 import com.example.ceo.domain.response.OwnerResponse;

@@ -19,6 +19,14 @@ spring:
       hibernate:
         format_sql: true
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeSerializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeSerializer
+      group-id: ceo-group
+      auto-offset-reset: earliest
+
 eureka:
   client:
     service-url:

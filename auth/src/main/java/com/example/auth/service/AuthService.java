@@ -9,6 +9,8 @@ import com.example.auth.domain.entity.User;
 import com.example.auth.domain.request.LoginRequest;
 import com.example.auth.domain.request.SignupRequest;
 import com.example.auth.domain.response.LoginResponse;
+import com.example.auth.kafka.CustomerProducer;
+import com.example.auth.kafka.OwnerProducer;
 import com.example.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,8 @@ public class AuthService {
     private final RestTemplate restTemplate;
     private final OwnerClient ownerClient;
     private final CustomerClient customerClient;
+    private final OwnerProducer ownerProducer;
+    private final CustomerProducer customerProducer;
 
     @Transactional
     public void signup(SignupRequest request) {
@@ -46,11 +50,17 @@ public class AuthService {
 
         // 외부 서버와의 통신을 RestTemplate 대신 FeignClient를 사용하여 통신
         if (user.getRole() == Role.OWNER) {
-            ceoClient(savedUser);
+//            ceoClient(savedUser);
+
+            // FeignClient 대신 Kafka를 사용하여 외부 서버와의 통신
+            ownerProducer.send(UserRequest.of(savedUser));
         }
 
         if (user.getRole() == Role.CUSTOMER) {
-            customerClient(savedUser);
+//            customerClient(savedUser);
+
+            // FeignClient 대신 Kafka를 사용하여 외부 서버와의 통신
+            customerProducer.send(UserRequest.of(savedUser));
         }
     }
 
